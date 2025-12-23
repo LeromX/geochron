@@ -2,6 +2,8 @@
 bin/
 obj/
 publish/
+dist/
+*.zip
 
 # User-specific files
 *.user

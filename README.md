@@ -1,8 +1,27 @@
 # Geochron Screensaver
 
-A beautiful Windows screensaver that displays a real-time world map with day/night terminator visualization, inspired by the classic Geochron world clock.
+A beautiful Windows screensaver featuring a 3D rotating Earth with real-time day/night cycle.
 
 ![Geochron Preview](docs/preview.png)
+
+---
+
+## Download & Install (Easy)
+
+**No programming knowledge required!**
+
+1. **[Download Geochron-Screensaver-v1.0.zip](https://github.com/LeromX/geochron/releases/latest/download/Geochron-Screensaver-v1.0.zip)**
+2. **Extract** the zip file to a folder (e.g., `C:\Geochron`)
+3. **Right-click** `GeochronScreensaver.scr` → **Install**
+4. Done! Configure wait time in Windows Settings → Personalization → Lock screen → Screen saver
+
+### Tips
+- **Run as app**: Double-click the `.scr` file to preview without installing
+- **Save your view**: Press `Ctrl+S` to save your preferred globe position - the screensaver will start there!
+- **Zoom**: Use mouse wheel to zoom in/out
+- **Rotate**: Click and drag to spin the globe
+
+---
 
 ## Features
 
