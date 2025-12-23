@@ -1,0 +1,255 @@
+<Window x:Class="GeochronScreensaver.UI.ConfigurationDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GeochronScreensaver.UI"
+        mc:Ignorable="d"
+        Title="Geochron Screensaver Settings"
+        Height="700" Width="950"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize"
+        MinWidth="800"
+        MinHeight="500"
+        Background="#F0F0F0">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="450" MinWidth="350"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Settings Panel -->
+        <Border Grid.Column="0" Background="White" Padding="20,20,30,20" BorderBrush="#CCCCCC" BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <TextBlock Text="Display Options" FontSize="16" FontWeight="Bold" Margin="0,0,0,15"/>
+
+                    <!-- Show Cities -->
+                    <CheckBox x:Name="ShowCitiesCheckBox"
+                              Content="Show cities"
+                              IsChecked="True"
+                              Margin="0,0,0,10"
+                              Checked="OnSettingChanged"
+                              Unchecked="OnSettingChanged"/>
+
+                    <!-- Show Grid Lines -->
+                    <CheckBox x:Name="ShowGridLinesCheckBox"
+                              Content="Show grid lines"
+                              IsChecked="True"
+                              Margin="0,0,0,10"
+                              Checked="OnSettingChanged"
+                              Unchecked="OnSettingChanged"/>
+
+                    <Separator Margin="0,0,0,20"/>
+
+                    <TextBlock Text="Visual Settings" FontSize="16" FontWeight="Bold" Margin="0,0,0,15"/>
+
+                    <!-- Night Overlay Opacity -->
+                    <TextBlock Text="Night overlay opacity:" Margin="0,0,0,5"/>
+                    <Grid Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <Slider x:Name="NightOpacitySlider"
+                                Grid.Column="0"
+                                Minimum="0.3"
+                                Maximum="1.0"
+                                Value="0.7"
+                                TickFrequency="0.1"
+                                IsSnapToTickEnabled="True"
+                                ValueChanged="OnSettingChanged"/>
+                        <TextBlock Grid.Column="1"
+                                   Text="{Binding ElementName=NightOpacitySlider, Path=Value, StringFormat=F1}"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   Margin="5,0,0,0"/>
+                    </Grid>
+
+                    <!-- Terminator Transition Width -->
+                    <TextBlock Text="Terminator transition width (degrees):" Margin="0,15,0,5"/>
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <Slider x:Name="TransitionWidthSlider"
+                                Grid.Column="0"
+                                Minimum="2"
+                                Maximum="15"
+                                Value="5"
+                                TickFrequency="1"
+                                IsSnapToTickEnabled="True"
+                                ValueChanged="OnSettingChanged"/>
+                        <TextBlock Grid.Column="1"
+                                   Text="{Binding ElementName=TransitionWidthSlider, Path=Value, StringFormat=F0}"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   Margin="5,0,0,0"/>
+                    </Grid>
+
+                    <Separator Margin="0,0,0,20"/>
+
+                    <TextBlock Text="Render Mode" FontSize="16" FontWeight="Bold" Margin="0,0,0,15"/>
+
+                    <ComboBox x:Name="RenderModeComboBox"
+                              Margin="0,0,0,20"
+                              SelectionChanged="OnSettingChanged">
+                        <ComboBoxItem Content="2D Map"/>
+                        <ComboBoxItem Content="3D Globe"/>
+                    </ComboBox>
+
+                    <Separator Margin="0,0,0,20"/>
+
+                    <TextBlock Text="Map Style" FontSize="16" FontWeight="Bold" Margin="0,0,0,15"/>
+
+                    <ComboBox x:Name="MapStyleComboBox"
+                              Margin="0,0,0,20"
+                              SelectionChanged="OnSettingChanged">
+                        <ComboBoxItem Content="Simplified"/>
+                        <ComboBoxItem Content="Satellite" IsSelected="True"/>
+                    </ComboBox>
+
+                    <Separator Margin="0,0,0,20"/>
+
+                    <TextBlock Text="Map Projection" FontSize="16" FontWeight="Bold" Margin="0,0,0,15"/>
+
+                    <ComboBox x:Name="ProjectionComboBox"
+                              Margin="0,0,0,20"
+                              SelectionChanged="OnSettingChanged">
+                        <ComboBoxItem Content="Equirectangular" IsSelected="True"/>
+                        <ComboBoxItem Content="Mercator"/>
+                    </ComboBox>
+
+                    <Separator Margin="0,0,0,20"/>
+
+                    <TextBlock Text="Theme" FontSize="16" FontWeight="Bold" Margin="0,0,0,15"/>
+
+                    <ComboBox x:Name="ThemeComboBox"
+                              Margin="0,0,0,20"
+                              SelectionChanged="OnSettingChanged">
+                        <ComboBoxItem Content="Dark" IsSelected="True"/>
+                        <ComboBoxItem Content="Light"/>
+                    </ComboBox>
+
+                    <Separator Margin="0,0,0,20"/>
+
+                    <TextBlock Text="Your Timezone" FontSize="16" FontWeight="Bold" Margin="0,0,0,15"/>
+
+                    <!-- Timezone Name -->
+                    <TextBlock Text="Display name:" Margin="0,0,0,5"/>
+                    <TextBox x:Name="TimezoneNameTextBox"
+                             Text="My Time"
+                             Margin="0,0,0,10"
+                             TextChanged="OnTimezoneNameChanged"/>
+
+                    <!-- Timezone Selection -->
+                    <TextBlock Text="Timezone:" Margin="0,0,0,5"/>
+                    <ComboBox x:Name="TimezoneComboBox"
+                              Margin="0,0,0,20"
+                              SelectionChanged="OnTimezoneChanged"/>
+
+                    <Separator Margin="0,0,0,20"/>
+
+                    <TextBlock Text="Time Simulation" FontSize="16" FontWeight="Bold" Margin="0,0,0,15"/>
+
+                    <!-- Time Speed -->
+                    <TextBlock Text="Time speed:" Margin="0,0,0,5"/>
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <Slider x:Name="TimeSpeedSlider"
+                                Grid.Column="0"
+                                Minimum="1"
+                                Maximum="1440"
+                                Value="1"
+                                TickFrequency="1"
+                                IsSnapToTickEnabled="False"
+                                ValueChanged="OnSettingChanged"/>
+                        <TextBlock Grid.Column="1"
+                                   Text="{Binding ElementName=TimeSpeedSlider, Path=Value, StringFormat={}{0:F0}x}"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   Margin="5,0,0,0"/>
+                    </Grid>
+                    <TextBlock Text="1x = real-time, 60x = 1 min/sec, 1440x = 1 day/min"
+                               FontSize="10"
+                               Foreground="Gray"
+                               Margin="0,-15,0,20"
+                               TextWrapping="Wrap"/>
+
+                    <Separator Margin="0,0,0,20"/>
+
+                    <TextBlock Text="Performance" FontSize="16" FontWeight="Bold" Margin="0,0,0,15"/>
+
+                    <!-- Update Interval -->
+                    <TextBlock Text="Sun position update interval:" Margin="0,0,0,5"/>
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="60"/>
+                        </Grid.ColumnDefinitions>
+                        <Slider x:Name="UpdateIntervalSlider"
+                                Grid.Column="0"
+                                Minimum="10"
+                                Maximum="300"
+                                Value="60"
+                                TickFrequency="10"
+                                IsSnapToTickEnabled="True"
+                                ValueChanged="OnSettingChanged"/>
+                        <TextBlock Grid.Column="1"
+                                   Text="{Binding ElementName=UpdateIntervalSlider, Path=Value, StringFormat={}{0:F0}s}"
+                                   HorizontalAlignment="Right"
+                                   VerticalAlignment="Center"
+                                   Margin="5,0,0,0"/>
+                    </Grid>
+
+                    <!-- Buttons -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
+                        <Button Content="Reset to Defaults"
+                                Width="120"
+                                Height="30"
+                                Margin="0,0,10,0"
+                                Click="ResetButton_Click"/>
+                        <Button Content="OK"
+                                Width="80"
+                                Height="30"
+                                IsDefault="True"
+                                Margin="0,0,10,0"
+                                Click="OkButton_Click"/>
+                        <Button Content="Cancel"
+                                Width="80"
+                                Height="30"
+                                IsCancel="True"
+                                Click="CancelButton_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Preview Panel -->
+        <Border Grid.Column="1" Background="Black" Padding="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Text="Preview"
+                           Foreground="White"
+                           FontSize="14"
+                           FontWeight="Bold"
+                           Margin="5,5,5,10"/>
+
+                <Border Grid.Row="1"
+                        BorderBrush="#555555"
+                        BorderThickness="1">
+                    <ContentControl x:Name="PreviewContainer"/>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

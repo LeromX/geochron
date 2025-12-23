@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>GeochronScreensaver</AssemblyName>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <StartupObject>GeochronScreensaver.Program</StartupObject>
+
+    <!-- App metadata -->
+    <Version>1.0.0</Version>
+    <Authors>Geochron</Authors>
+    <Description>A beautiful screensaver showing real-time day/night across Earth</Description>
+  </PropertyGroup>
+
+  <!-- Release build produces .scr file -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <TargetExt>.scr</TargetExt>
+  </PropertyGroup>
+
+  <!-- Self-contained publish settings -->
+  <PropertyGroup Condition="'$(PublishSingleFile)' == 'true'">
+    <SelfContained>true</SelfContained>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+  </PropertyGroup>
+
+  <!-- Copy satellite map images to output -->
+  <ItemGroup>
+    <Content Include="Resources\Maps\*.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>
