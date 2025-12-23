@@ -49,6 +49,10 @@ public partial class GlobeControl : WpfUserControl, IDisposable
     private const double MinZoom = 0.5;
     private const double MaxZoom = 2.0;
 
+    // Auto-save state
+    private DispatcherTimer? _autoSaveTimer;
+    private bool _hasUserInteracted;
+
     // Time simulation
     private DateTime _simulatedTime;
     private DateTime _lastRealTime;
@@ -113,6 +117,13 @@ public partial class GlobeControl : WpfUserControl, IDisposable
 
         // Mouse wheel for zoom
         MouseWheel += OnMouseWheel;
+
+        // Auto-save timer (saves position 2 seconds after user stops interacting)
+        _autoSaveTimer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromSeconds(2)
+        };
+        _autoSaveTimer.Tick += AutoSaveTimer_Tick;
     }
 
     private void GlobeControl_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -313,6 +324,7 @@ public partial class GlobeControl : WpfUserControl, IDisposable
         _isDragging = false;
         ReleaseMouseCapture();
         e.Handled = true;
+        ScheduleAutoSave();
     }
 
     private void OnMouseMove(object sender, WpfMouseEventArgs e)
@@ -445,6 +457,36 @@ public partial class GlobeControl : WpfUserControl, IDisposable
         _renderer?.SetCameraZoom(_currentZoom);
         e.Handled = true;
         UpdateRender();
+        ScheduleAutoSave();
+    }
+
+    #endregion
+
+    #region Auto-save
+
+    private void ScheduleAutoSave()
+    {
+        _hasUserInteracted = true;
+        // Reset and restart the timer
+        _autoSaveTimer?.Stop();
+        _autoSaveTimer?.Start();
+    }
+
+    private void AutoSaveTimer_Tick(object? sender, EventArgs e)
+    {
+        _autoSaveTimer?.Stop();
+
+        // Only save if user has actually interacted and momentum has stopped
+        if (_hasUserInteracted && Math.Abs(_velocityLatitude) < 0.1 && Math.Abs(_velocityLongitude) < 0.1)
+        {
+            SaveCurrentPosition();
+            _hasUserInteracted = false;
+        }
+        else if (_hasUserInteracted)
+        {
+            // Still has momentum, check again later
+            _autoSaveTimer?.Start();
+        }
     }
 
     #endregion
@@ -511,6 +553,11 @@ public partial class GlobeControl : WpfUserControl, IDisposable
                 _updateTimer.Tick -= UpdateTimer_Tick;
                 _animationTimer.Stop();
                 _animationTimer.Tick -= AnimationTimer_Tick;
+                if (_autoSaveTimer != null)
+                {
+                    _autoSaveTimer.Stop();
+                    _autoSaveTimer.Tick -= AutoSaveTimer_Tick;
+                }
                 Loaded -= GlobeControl_Loaded;
                 SizeChanged -= GlobeControl_SizeChanged;
                 MouseLeftButtonDown -= OnMouseLeftButtonDown;
