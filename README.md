@@ -17,9 +17,10 @@ A beautiful Windows screensaver featuring a 3D rotating Earth with real-time day
 
 ### Tips
 - **Run as app**: Double-click the `.scr` file to preview without installing
-- **Save your view**: Press `Ctrl+S` to save your preferred globe position - the screensaver will start there!
+- **Auto-saves your view**: Just rotate and zoom the globe - your position saves automatically after 2 seconds!
 - **Zoom**: Use mouse wheel to zoom in/out
 - **Rotate**: Click and drag to spin the globe
+- The screensaver will always start with your last saved view
 
 ---
 
@@ -27,7 +28,7 @@ A beautiful Windows screensaver featuring a 3D rotating Earth with real-time day
 
 - **3D Globe mode** with realistic day/night blending using NASA Blue Marble textures
 - **Mouse interaction** - drag to rotate, scroll wheel to zoom
-- **Save position** - save your preferred globe view for the screensaver (Ctrl+S)
+- **Auto-save position** - your globe view saves automatically for the screensaver
 - **Right-click** on any location to see local time
 - **Real-time day/night terminator** with smooth twilight gradient
 - **Accurate sun position** using astronomical algorithms
@@ -44,8 +45,8 @@ A beautiful Windows screensaver featuring a 3D rotating Earth with real-time day
 | Rotate globe | Left-click + drag |
 | Zoom in/out | Mouse wheel |
 | Show local time | Right-click on location |
-| Save position for screensaver | Ctrl+S |
-| Reset position | View → Reset Globe Position |
+| Save position | Automatic (2 sec after you stop) |
+| Reset to default | View → Reset Globe Position |
 | Fullscreen | F11 |
 | Settings | Ctrl+, |
 
